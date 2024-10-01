@@ -1,0 +1,27 @@
+@media screen and (max-width:420px) {
+    .info-top .btn.btn-primary {
+        font-size: 11px;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .header-nav {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .offcanvas-width{
+        width: 85% !important;
+    }
+    .info{
+        margin: 20px 0;
+    }
+}
+
+@media (max-width: 991.98px){
+    .task-table {
+        display: none;
+    }
+}

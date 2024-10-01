@@ -1,0 +1,105 @@
+﻿@model List<TestBlog.Core.ViewModels.Admin.Blog.FilterBlogViewModel>
+
+@{
+    ViewData["Title"] = "مدیریت مقالات";
+    var counter = 1;
+}
+
+<div class="container my-4">
+    <div class="page-header d-print-none">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    مدیریت پست ها
+                </h2>
+                <div class="text-muted mt-2">تعداد پست های موجود : @ViewBag.BlogCount</div>
+            </div>
+            <div class="col-12 col-md-auto ms-auto d-print-none">
+                <div class="d-flex info-top">
+                    <div class="me-3">
+                        <form asp-area="Admin" asp-controller="Blog" asp-action="BlogSearch" class="input-group gallery-input-icon">
+                            <input type="text" name="text" class="form-control" placeholder="جستجو ...">
+                            <button class="btn input-search-icon" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Blog" asp-action="CreateBlog" class="btn btn-primary">
+                        پست جدید
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="page-section">
+    <div class="container">
+        <div class="row">
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-4 col-10">
+                        <div class="alert alert-info alert-dismissible">
+                            <h5><i class="icon fa fa-warning"></i> توجه!</h5>
+                            <p>
+                                پست ها به صورت 25 عددی صفحه بندی شده اند.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-12 col-lg-6 col-xl-4 my-3">
+                        <div class="card card-sm">
+                            <img src="~/Images/@item.ImageName" class="img-top-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h3>
+                                        @item.Title
+                                    </h3>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <div class="text-muted text-sm mb-1">پست شماره @counter</div>
+                                        <div class="text-muted text-sm">@item.CreateTime.ToPersianDate("ds dd ms Y")</div>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <a asp-area="Admin" asp-controller="Blog" asp-action="EditBlog" asp-route-id="@item.BlogId" class="btn btn-warning p-2">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="Blog" asp-action="DeleteBlog" asp-route-id="@item.BlogId" class="btn btn-danger p-2">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    counter += 1;
+                }
+            }
+            else
+            {
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-4 col-10">
+                        <div class="alert alert-warning alert-dismissible">
+                            <h5><i class="icon fa fa-warning"></i> توجه!</h5>
+                            <p>
+                                هیچ آیتمی وجود ندارد.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    </div>
+</section>
+

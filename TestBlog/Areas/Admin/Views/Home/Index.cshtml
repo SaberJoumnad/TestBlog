@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "پنل مدیریت سایت";
+}
+
+<section class="page-section">
+    <div class="container">
+
+        <div class="col-12">
+            <div class="card card-md">
+                <div class="card-stamp card-stamp-lg">
+                    <div class="card-stamp-icon bg-primary">
+                        <i class="fa fa-bookmark icon"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-10">
+                            <h4 class="fw-bold pb-2">مدیر محترم سایت</h4>
+                            <div class="markdown text-muted">
+                                <p>
+                                    با کلیک بر روی لینک زیر میتوانید برای ایجاد محصول جدید اقدام کنید.
+                                </p>
+                            </div>
+                            <div class="mt-3">
+                                <a asp-area="Admin" asp-controller="Product" asp-action="FilterProducts" class="btn btn-primary">مدیریت محصولات</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="page-section">
+            <div class="row">
+
+                <div class="col-sm-6 col-lg-3 my-2">
+                    <div class="small-box" style="background-color: #17a2b8;">
+                        <div class="inner">
+                            <h3>@ViewBag.IndexCountProduct</h3>
+                            <p class="text-white">محصول</p>
+                        </div>
+                        <div class="icon-card">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="FilterProducts" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left text-white"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 my-2">
+                    <div class="small-box" style="background-color: #28a745;">
+                        <div class="inner">
+                            <h3>
+                                @ViewBag.IndexCountCategory
+                            </h3>
+                            <p class="text-white">دسته بندی</p>
+                        </div>
+                        <div class="icon-card">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="FilterCategories" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left text-white"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 my-2">
+                    <div class="small-box" style="background-color: #ffc107;">
+                        <div class="inner">
+                            <h3>@ViewBag.IndexCountBlog</h3>
+                            <p class="text-white">تعداد مقالات</p>
+                        </div>
+                        <div class="icon-card">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <a asp-area="Admin" asp-controller="Blog" asp-action="FilterBlogs" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left text-white"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 my-2">
+                    <div class="small-box" style="background-color: #dc3545;">
+                        <div class="inner">
+                            <h3>0</h3>
+                            <p class="text-white">خطای اضطراری</p>
+                        </div>
+                        <div class="icon-card">
+                            <i class="fa fa-cog"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left text-white"></i></a>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+    </div>
+</section>

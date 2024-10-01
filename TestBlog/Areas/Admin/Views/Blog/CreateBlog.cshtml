@@ -1,0 +1,77 @@
+﻿@model TestBlog.Core.ViewModels.Admin.Blog.CreateBlogViewModel
+
+@{
+    ViewData["Title"] = "ایجاد مقاله جدید";
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/ckeditor-4/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('my-textarea-1',
+            {
+                language: 'fa'
+            }
+        );
+        //CKEDITOR.replace('my-textarea-1');
+        //CKEDITOR.replace('my-textarea-2');
+    </script>
+}
+
+
+<div class="title text-start">
+    <div class="container">
+        <div class="col">
+            <h2 class="page-title">
+                ایجاد مقاله جدید
+            </h2>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3 p-4">
+                <form asp-area="Admin" asp-controller="Blog" asp-action="CreateBlog" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageName" class="control-label"></label>
+                        <input type="file" asp-for="ImageName" onchange="readURL(this);" class="form-control" />
+                        <span asp-validation-for="ImageName" class="text-danger"></span>
+                        <div class="d-flex justify-content-center">
+                            <img id="show" src="#" class="my-3" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Text" class="control-label"></label>
+                        <textarea asp-for="Text" id="my-textarea-1" cols="30" rows="10" class="form-control"></textarea>
+                        <span asp-validation-for="Text" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ایجاد" class="btn btn-success" /> | <a asp-area="Admin" asp-controller="Blog" asp-action="FilterBlogs">مدیریت مقالات</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4 sticky-top">
+            <div class="card p-4 info">
+                <h4>راهنمایی</h4>
+                <hr>
+                <div class="alert alert-info">
+                    <h4>دقت داشته باشید که ....</h4>
+                    <p>تمامی تغیراتی که ایجاد میکنید در پیشرفت سئو وبسایت تاثیر گذار است.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
