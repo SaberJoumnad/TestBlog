@@ -67,20 +67,49 @@ namespace TestBlog.Areas.Admin.Controllers
 
         [HttpPost("edit-blog/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditBlog(EditBlogViewModel editBlog, int id)
+        public async Task<IActionResult> EditBlog(EditAndDeleteBlogViewModel editBlog, int id)
         {
             var result = await _blogService.EditBlog(editBlog, id);
             switch (result)
             {
-                case EditBlogResult.NotFound:
+                case EditAndDeleteBlogResult.NotFound:
                     TempData[ErrorMessage] = "مقاله مورد نظر پیدا نشد";
                     break;
-                case EditBlogResult.Success:
-                    TempData[SuccessMessage] = "ویرایش مقاله مورد نظر با موفقیت انجام شد.";
+                case EditAndDeleteBlogResult.Success:
+                    TempData[SuccessMessage] = "مقاله مورد نظر با موفقیت ویرایش شد";
                     return RedirectToAction(nameof(FilterBlogs));
             }
             return View(editBlog);
         }
+        #endregion
+
+        #region delete-blog
+        [HttpGet("delete-blog/{id}")]
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            var data = await _blogService.GetBlogById(id);
+            if (data == null)
+                return NotFound();
+
+            return View(data);
+        }
+        [HttpPost("delete-blog/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteBlog(int? id)
+        {
+            var result = await _blogService.DeleteBlog(id.Value);
+            switch (result)
+            {
+                case EditAndDeleteBlogResult.NotFound:
+                    TempData[ErrorMessage] = "مقاله مورد نظر پیدا نشد";
+                    break;
+                case EditAndDeleteBlogResult.Success:
+                    TempData[SuccessMessage] = "مقاله مورد نظر با موفقیت حذف شد";
+                    return RedirectToAction(nameof(FilterBlogs));
+            }
+            return View(result);
+        }
+
         #endregion
 
     }

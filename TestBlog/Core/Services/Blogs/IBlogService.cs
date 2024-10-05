@@ -7,9 +7,9 @@ namespace TestBlog.Core.Services.Blogs
         #region admin
         Task<List<FilterBlogViewModel>> GetAllBlogs();
         Task<CreateBlogResult> CreateBlog(CreateBlogViewModel createBlog);
-        Task<EditBlogViewModel> GetBlogById(int blogId);
-        Task<EditBlogResult> EditBlog(EditBlogViewModel editBlog, int id);
-
+        Task<EditAndDeleteBlogViewModel> GetBlogById(int blogId);
+        Task<EditAndDeleteBlogResult> EditBlog(EditAndDeleteBlogViewModel editBlog, int id);
+        Task<EditAndDeleteBlogResult> DeleteBlog(int blogId);
         #endregion
     }
 }

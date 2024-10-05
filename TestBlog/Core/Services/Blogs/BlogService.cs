@@ -64,7 +64,7 @@ namespace TestBlog.Core.Services.Blogs
             }
         }
 
-        public async Task<EditBlogViewModel> GetBlogById(int blogId)
+        public async Task<EditAndDeleteBlogViewModel> GetBlogById(int blogId)
         {
             var currentBlog = await _context.Blogs.AsQueryable()
                 .FirstOrDefaultAsync(c => c.BlogId == blogId);
@@ -74,7 +74,7 @@ namespace TestBlog.Core.Services.Blogs
                 return null;
             }
 
-            return new EditBlogViewModel
+            return new EditAndDeleteBlogViewModel
             {
                 BlogId = currentBlog.BlogId,
                 Title = currentBlog.Title,
@@ -85,13 +85,13 @@ namespace TestBlog.Core.Services.Blogs
 
         }
 
-        public async Task<EditBlogResult> EditBlog(EditBlogViewModel editBlog, int id)
+        public async Task<EditAndDeleteBlogResult> EditBlog(EditAndDeleteBlogViewModel editBlog, int id)
         {
             var blog = await _context.Blogs.AsQueryable().FirstOrDefaultAsync(o => o.BlogId == id);
 
             if (blog == null)
             {
-                return EditBlogResult.NotFound;
+                return EditAndDeleteBlogResult.NotFound;
             }
 
             string filename = null;
@@ -116,8 +116,25 @@ namespace TestBlog.Core.Services.Blogs
             _context.Blogs.Update(blog);
             await _context.SaveChangesAsync();
 
-            return EditBlogResult.Success;
+            return EditAndDeleteBlogResult.Success;
 
+        }
+
+        public async Task<EditAndDeleteBlogResult> DeleteBlog(int blogId)
+        {
+            var currentBlog = await _context.Blogs.FirstOrDefaultAsync(o => o.BlogId == blogId);
+            if (currentBlog == null)
+            {
+                return EditAndDeleteBlogResult.NotFound;
+            }
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images", currentBlog.ImageName);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            _context.Blogs.Remove(currentBlog);
+            await _context.SaveChangesAsync();
+            return EditAndDeleteBlogResult.Success;
         }
     }
 

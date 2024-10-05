@@ -1,0 +1,47 @@
+﻿@model TestBlog.Core.ViewModels.Admin.Blog.EditAndDeleteBlogViewModel
+@{
+    ViewData["Title"] = "حذف";
+}
+
+<div class="title text-start">
+    <div class="container">
+        <div class="col">
+            <h2 class="page-title">
+                حذف مقاله "@Model.Title"
+            </h2>
+        </div>
+    </div>
+</div>
+
+
+<section class="page-section">
+    <div class="container">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.Title) :</dt>
+                        <dd class="col-8 col-sm-10">@Html.DisplayFor(model => model.Title)</dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.ImageName) :</dt>
+                        <dd class="col-8 col-sm-10"><img src="~/Images/@Model.ImageFile" width="50%" alt=""></dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.Text) :</dt>
+                        <dd class="col-8 col-sm-10">@Html.Raw(Model.Text)</dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.CreateTime) :</dt>
+                        <dd class="col-8 col-sm-10">
+                            @Model.CreateTime.ToPersianDate("ds dd ms Y")
+                        </dd>
+
+                    </dl>
+
+                    <form asp-action="DeleteBlog">
+                        <input type="hidden" asp-for="BlogId" />
+                        <input type="submit" value="حذف" class="btn btn-danger" /> | <a asp-area="Admin" asp-controller="Blog" asp-action="FilterBlogs">مدیریت مقالات</a>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

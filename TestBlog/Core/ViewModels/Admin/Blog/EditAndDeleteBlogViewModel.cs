@@ -2,9 +2,9 @@
 
 namespace TestBlog.Core.ViewModels.Admin.Blog
 {
-    public class EditBlogViewModel
+    public class EditAndDeleteBlogViewModel
     {
-        // this view model is for get blog by Id and edit blog
+        // this view model is for get blog by Id and edit and delete blog
 
         public int BlogId { get; set; }
         public string? ImageFile { get; set; }
@@ -21,14 +21,13 @@ namespace TestBlog.Core.ViewModels.Admin.Blog
         public string Text { get; set; }
 
         [Display(Name = "تصویر")]
-        //[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public IFormFile ImageName { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreateTime { get; set; }
     }
 
-    public enum EditBlogResult
+    public enum EditAndDeleteBlogResult
     {
         Success,
         NotFound
