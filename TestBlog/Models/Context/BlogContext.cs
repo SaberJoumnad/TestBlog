@@ -11,6 +11,7 @@ namespace TestBlog.Models.Context
         }
 
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
