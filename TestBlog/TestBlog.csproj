@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Utilities\" />
-    <Folder Include="Core\ViewModels\Site\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
