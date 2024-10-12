@@ -1,0 +1,31 @@
+﻿@model TestBlog.Core.ViewModels.Site.Account.ActiveAccountViewModel
+@{
+    ViewData["Title"] = "فعال سازی حساب کاربری";
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>فعال سازی حساب کاربری</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Account" asp-action="ActiveAccount" method="post">
+                        <input type="hidden" asp-for="PhoneNumber" />
+                        <div class="mb-3">
+                            <label class="form-label">کد فعال سازی</label>
+                            <input type="text" class="form-control" asp-for="ActiveCode" placeholder="">
+                            <span asp-validation-for="ActiveCode" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">فعال سازی حساب کاربری</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

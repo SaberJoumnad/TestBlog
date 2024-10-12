@@ -2,6 +2,9 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using TestBlog.Core.Services.Blogs;
+using TestBlog.Core.Services.Users;
+using TestBlog.Core.Utilities.Password;
+using TestBlog.Core.Utilities.SMS;
 using TestBlog.Models.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +24,9 @@ builder.Services.AddDbContext<BlogContext>(options =>
 #region IOC
 
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHelper, PasswordHelper>();
+builder.Services.AddScoped<ISmsService, SmsService>();
 
 // برای فارسی کردن پیغام های سایت
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
@@ -43,6 +49,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "areas",
