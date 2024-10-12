@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using TestBlog.Core.Services.Blogs;
@@ -31,6 +32,20 @@ builder.Services.AddScoped<ISmsService, SmsService>();
 // برای فارسی کردن پیغام های سایت
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
 
+#endregion
+
+#region authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options =>
+{
+    options.LoginPath = "/login";
+    options.LogoutPath = "/log-out";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+});
 #endregion
 
 var app = builder.Build();

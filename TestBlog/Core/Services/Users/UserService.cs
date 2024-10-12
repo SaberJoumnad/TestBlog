@@ -82,6 +82,19 @@ namespace TestBlog.Core.Services.Users
             return ActiveAccountResult.Error;
         }
 
+        public async Task<LoginUserResult> LoginUser(LoginUserViewModel login)
+        {
+            var user = await _context.Users
+                .SingleOrDefaultAsync(s => s.PhoneNumber == login.PhoneNumber);
+
+            if (user == null) return LoginUserResult.NotFound;
+            if (user.IsBlocked) return LoginUserResult.IsBlocked;
+            if (!user.IsMobileActive) return LoginUserResult.NotActive;
+            if (user.Password != _passwordHelper.EncodePasswordMd5(login.Password)) return LoginUserResult.NotFound;
+
+            return LoginUserResult.Success;
+        }
+
         #endregion
 
     }

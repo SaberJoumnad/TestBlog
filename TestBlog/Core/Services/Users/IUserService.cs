@@ -9,7 +9,7 @@ namespace TestBlog.Core.Services.Users
         Task<RegisterUserResult> RegisterUser(RegisterUserViewModel register);
         Task<User> GetUserByPhoneNumber(string phoneNumber);
         Task<ActiveAccountResult> ActiveAccount(ActiveAccountViewModel activeAccount);
-
+        Task<LoginUserResult> LoginUser(LoginUserViewModel login);
         #endregion
     }
 }

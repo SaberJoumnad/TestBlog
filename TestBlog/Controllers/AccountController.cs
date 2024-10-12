@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TestBlog.Core.Services.Users;
 using TestBlog.Core.ViewModels.Site.Account;
 
@@ -82,6 +85,65 @@ namespace TestBlog.Controllers
             return View(activeAccount);
         }
 
+        #endregion
+
+        #region login
+        [HttpGet("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost("login")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginUserViewModel login)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.LoginUser(login);
+                switch (result)
+                {
+                    case LoginUserResult.NotFound:
+                        TempData[WarningMessage] = "کاربری یافت نشد";
+                        break;
+                    case LoginUserResult.NotActive:
+                        TempData[ErrorMessage] = "حساب کاربری شما فعال نمی باشد";
+                        break;
+                    case LoginUserResult.IsBlocked:
+                        TempData[ErrorMessage] = "حساب شما توسط واحد پشتیبانی مسدود شده است";
+                        TempData[InfoMessage] = "جهت اطلاع بیشتر لطفا به بخش تماس با ما مراجعه کنید";
+                        break;
+                    case LoginUserResult.Success:
+                        var user = await _userService.GetUserByPhoneNumber(login.PhoneNumber);
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, user.PhoneNumber),
+                            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+                        };
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principle = new ClaimsPrincipal(identity);
+                        var properties = new AuthenticationProperties
+                        {
+                            IsPersistent = login.RememberMe
+                        };
+                        await HttpContext.SignInAsync(principle, properties);
+                        TempData[SuccessMessage] = "شما با موفقیت وارد حساب کاربری خود شدید";
+                        return Redirect("/");
+                }
+            }
+
+            return View(login);
+        }
+        #endregion
+
+        #region log-out
+        [HttpGet("log-Out")]
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+            TempData[WarningMessage] = "شما با موفقیت از حساب کاربری خود خارج شدید";
+            return Redirect("/");
+        }
         #endregion
 
     }
