@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TestBlog.Core.Utilities.Password;
 using TestBlog.Core.Utilities.SMS;
+using TestBlog.Core.ViewModels.Admin.Account;
 using TestBlog.Core.ViewModels.Site.Account;
 using TestBlog.Models.Context;
 using TestBlog.Models.Entities;
@@ -42,6 +43,7 @@ namespace TestBlog.Core.Services.Users
                     MobileActiveCode = new Random().Next(10000, 99999).ToString(),
                     IsDelete = false,
                     IsBlocked = false,
+                    IsAdmin = false,
                 };
 
                 await _context.Users.AddAsync(user);
@@ -93,6 +95,24 @@ namespace TestBlog.Core.Services.Users
             if (user.Password != _passwordHelper.EncodePasswordMd5(login.Password)) return LoginUserResult.NotFound;
 
             return LoginUserResult.Success;
+        }
+
+        #endregion
+
+        #region admin
+
+        public async Task<List<FilterUserViewModel>> GetAllUser()
+        {
+            return await _context.Users.AsQueryable().OrderByDescending(o => o.CreateDate)
+                .Where(j => j.IsDelete == false)
+                .Select(c => new FilterUserViewModel
+                {
+                    IsAdmin = c.IsAdmin,
+                    IsBlocked = c.IsBlocked,
+                    LastName = c.LastName,
+                    PhoneNumber = c.PhoneNumber,
+                    UserId = c.UserId
+                }).ToListAsync();
         }
 
         #endregion

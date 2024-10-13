@@ -48,7 +48,8 @@ namespace TestBlog.Models.Entities
         [Display(Name = "جنسیت")]
         public UserGender UserGender { get; set; }
 
-
+        [Display(Name = "ادمین")]
+        public bool IsAdmin { get; set; }
     }
     public enum UserGender
     {

@@ -1,0 +1,76 @@
+﻿@model List<TestBlog.Core.ViewModels.Admin.Account.FilterUserViewModel>
+
+@{
+    ViewData["Title"] = "مدیریت کاربران";
+    var counter = 1;
+}
+
+<div class="title text-start">
+    <div class="container">
+        <div class="col-10 mx-auto">
+            <div class="col my-2">
+                <h2 class="page-title">
+                    مدیریت کاربران
+                </h2>
+                <hr />
+
+            </div>
+
+        </div>
+
+        <div class="col-12">
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-vcenter table-bordered card-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>نام خانوادگی</th>
+                                <th>تلفن همراه</th>
+                                <th>بلاک شده / نشده</th>
+                                <th>ادمین / کاربر</th>
+                                <th>فعالیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@counter</td>
+                                    <td class="text-muted">@item.LastName</td>
+                                    <td class="text-muted">@item.PhoneNumber</td>
+                                    @if (item.IsBlocked == true)
+                                    {
+                                        <td class="text-muted">بلاک شده</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-muted">بلاک نشده</td>
+                                    }
+
+                                    @if (item.IsAdmin == true)
+                                    {
+                                        <td class="text-muted">ادمین</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-muted">کاربر</td>
+                                    }
+                                   
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="Account" asp-action="EditUser" asp-route-id="@item.UserId" class="btn btn-warning">ویرایش</a> |
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="DeleteUser" asp-route-id="@item.UserId" class="btn btn-danger">حذف</a>
+                                    </td>
+                                </tr>
+                                counter += 1;
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

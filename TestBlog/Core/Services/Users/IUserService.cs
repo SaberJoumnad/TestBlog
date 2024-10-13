@@ -1,4 +1,5 @@
-﻿using TestBlog.Core.ViewModels.Site.Account;
+﻿using TestBlog.Core.ViewModels.Admin.Account;
+using TestBlog.Core.ViewModels.Site.Account;
 using TestBlog.Models.Entities;
 
 namespace TestBlog.Core.Services.Users
@@ -11,5 +12,10 @@ namespace TestBlog.Core.Services.Users
         Task<ActiveAccountResult> ActiveAccount(ActiveAccountViewModel activeAccount);
         Task<LoginUserResult> LoginUser(LoginUserViewModel login);
         #endregion
+
+        #region admin
+        Task<List<FilterUserViewModel>> GetAllUser();
+        #endregion
+
     }
 }
