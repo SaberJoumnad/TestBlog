@@ -1,0 +1,80 @@
+﻿@model TestBlog.Core.ViewModels.Admin.Account.DeleteUserViewModel
+@{
+    ViewData["Title"] = "حذف";
+}
+
+<div class="title text-start">
+    <div class="container">
+        <div class="col">
+            <h2 class="page-title">
+                حذف کاربر "@Model.FirstName"
+            </h2>
+        </div>
+    </div>
+</div>
+
+
+<section class="page-section">
+    <div class="container">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <dl class="row">
+
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.FirstName) :</dt>
+                        <dd class="col-8 col-sm-10">@Html.DisplayFor(model => model.FirstName)</dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.LastName) :</dt>
+                        <dd class="col-8 col-sm-10">@Html.DisplayFor(model => model.LastName)</dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.PhoneNumber) :</dt>
+                        <dd class="col-8 col-sm-10">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.IsAdmin) :</dt>
+                        <dd class="col-8 col-sm-10">
+                            @if (Model.IsAdmin == true)
+                            {
+                                <p class="text-muted">ادمین</p>
+                            }
+                            else
+                            {
+                                <p class="text-muted">کاربر</p>
+                            }
+                        </dd>
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.IsBlocked) :</dt>
+                        @if (Model.IsBlocked == true)
+                        {
+                            <p class="text-muted">بلاک شده</p>
+                        }
+                        else
+                        {
+                            <p class="text-muted">بلاک نشده</p>
+                        }
+
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.IsMobileActive) :</dt>
+                        @if (Model.IsMobileActive == true)
+                        {
+                            <p class="text-muted">شماره تلفن تایید شده</p>
+                        }
+                        else
+                        {
+                            <p class="text-muted">شماره تلفن تایید نشده</p>
+                        }
+
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.FirstName) :</dt>
+                        <dd class="col-8 col-sm-10">@Html.DisplayFor(model => model.UserGender)</dd>
+
+                        <dt class="col-4 col-sm-2">@Html.DisplayNameFor(model => model.CreateDate) :</dt>
+                        <dd class="col-8 col-sm-10">@Model.CreateDate.ToPersianDate("ds dd ms Y")</dd>
+
+                    </dl>
+
+                    <form asp-action="DeleteUser">
+                        <input type="hidden" asp-for="UserId" />
+                        <input type="submit" value="حذف" class="btn btn-danger" /> | <a asp-area="Admin" asp-controller="Account" asp-action="filterUsers">مدیریت کاربران</a>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

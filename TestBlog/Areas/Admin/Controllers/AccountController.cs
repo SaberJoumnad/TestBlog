@@ -50,5 +50,34 @@ namespace TestBlog.Areas.Admin.Controllers
         }
         #endregion
 
+        #region delete-user
+        [HttpGet("delete-user/{id}")]
+        public async Task<IActionResult> DeleteUser(int? id)
+        {
+            var data = await _userService.GetUserByIdForDelete(id.Value);
+            if (data == null) return NotFound();
+            return View(data);
+        }
+
+        [HttpPost("delete-user/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var result = await _userService.DeleteUser(id);
+            switch (result)
+            {
+                case DeleteUserResult.Notfound:
+                    TempData[ErrorMessage] = "کاربر مورد نظر پیدا نشد";
+                    break;
+                case DeleteUserResult.Success:
+                    TempData[SuccessMessage] = "کاربر مورد نظر با موفقیت حذف شد";
+                    return RedirectToAction(nameof(FilterUsers));
+            }
+
+            return View(id);
+        }
+
+        #endregion
+
     }
 }
