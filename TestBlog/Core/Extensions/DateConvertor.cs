@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace TestBlog.Core.Convertors
+namespace TestBlog.Core.Extensions
 {
     public static class DateConvertor
     {
