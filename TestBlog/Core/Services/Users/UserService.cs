@@ -90,8 +90,15 @@ namespace TestBlog.Core.Services.Users
                 .SingleOrDefaultAsync(s => s.PhoneNumber == login.PhoneNumber);
 
             if (user == null) return LoginUserResult.NotFound;
-            if (user.IsBlocked) return LoginUserResult.IsBlocked;
-            if (!user.IsMobileActive) return LoginUserResult.NotActive;
+            if (user.IsDelete == true) return LoginUserResult.NotFound;
+            if (user.IsBlocked == true) return LoginUserResult.IsBlocked;
+            // یا
+            //if (user.IsBlocked) return LoginUserResult.IsBlocked;
+
+            if (user.IsMobileActive == false) return LoginUserResult.NotActive;
+            // یا
+            //if (!user.IsMobileActive) return LoginUserResult.NotActive;
+
             if (user.Password != _passwordHelper.EncodePasswordMd5(login.Password)) return LoginUserResult.NotFound;
 
             return LoginUserResult.Success;
@@ -191,6 +198,57 @@ namespace TestBlog.Core.Services.Users
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return DeleteUserResult.Success;
+        }
+
+        public async Task<List<FilterUserViewModel>> GetAllDeletedUser()
+        {
+            return await _context.Users.AsQueryable().OrderByDescending(o => o.CreateDate)
+                .Where(j => j.IsDelete == true)
+                .Select(c => new FilterUserViewModel
+                {
+                    IsAdmin = c.IsAdmin,
+                    IsBlocked = c.IsBlocked,
+                    LastName = c.LastName,
+                    PhoneNumber = c.PhoneNumber,
+                    UserId = c.UserId
+                }).ToListAsync();
+        }
+
+
+        public async Task<RestoreUserViewModel> GetUserByIdForRestore(int id)
+        {
+            var currentUser = await _context.Users.AsQueryable()
+                .FirstOrDefaultAsync(i => i.UserId == id);
+
+            if (currentUser == null) return null;
+
+            return new RestoreUserViewModel
+            {
+                IsAdmin = currentUser.IsAdmin,
+                IsBlocked = currentUser.IsBlocked,
+                LastName = currentUser.LastName,
+                PhoneNumber = currentUser.PhoneNumber,
+                FirstName = currentUser.FirstName,
+                IsMobileActive = currentUser.IsMobileActive,
+                CreateDate = currentUser.CreateDate,
+                UserGender = currentUser.UserGender,
+                IsDelete = currentUser.IsDelete,
+                UserId = currentUser.UserId,
+            };
+        }
+
+
+        public async Task<RestoreUserResult> RestoreUser(int id)
+        {
+            var user = await _context.Users.AsQueryable()
+                .FirstOrDefaultAsync(i => i.UserId == id);
+
+            if (user == null) return RestoreUserResult.Notfound;
+
+            user.IsDelete = false;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return RestoreUserResult.Success;
         }
 
 

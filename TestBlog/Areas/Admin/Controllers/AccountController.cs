@@ -79,5 +79,42 @@ namespace TestBlog.Areas.Admin.Controllers
 
         #endregion
 
+        #region restore-user
+        [HttpGet("filter-restore-user")]
+        public async Task<IActionResult> FilterRestoreUsers()
+        {
+            return View(await _userService.GetAllDeletedUser());
+        }
+
+        [HttpGet("restore-user/{id}")]
+        public async Task<IActionResult> RestoreUser(int? id)
+        {
+            var data = await _userService.GetUserByIdForRestore(id.Value);
+            if (data == null) return NotFound();
+            return View(data);
+        }
+
+        [HttpPost("restore-user/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RestoreUser(int id)
+        {
+            var result = await _userService.RestoreUser(id);
+            switch (result)
+            {
+                case RestoreUserResult.Notfound:
+                    TempData[ErrorMessage] = "کاربر مورد نظر پیدا نشد";
+                    break;
+                case RestoreUserResult.Success:
+                    TempData[SuccessMessage] = "کاربر مورد نظر با موفقیت بازگردانی شد";
+                    return RedirectToAction(nameof(FilterUsers));
+            }
+
+            return View(id);
+        }
+
+
+
+        #endregion
+
     }
 }

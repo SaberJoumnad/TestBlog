@@ -1,4 +1,4 @@
-﻿@model TestBlog.Core.ViewModels.Admin.Account.DeleteUserViewModel
+﻿@model TestBlog.Core.ViewModels.Admin.Account.RestoreUserViewModel
 @{
     ViewData["Title"] = "حذف";
 }
@@ -67,9 +67,9 @@
 
                     </dl>
 
-                    <form asp-area="Admin" asp-controller="Account" asp-action="DeleteUser">
+                    <form asp-area="Admin" asp-controller="Account" asp-action="RestoreUser">
                         <input type="hidden" asp-for="UserId" />
-                        <input type="submit" value="حذف" class="btn btn-danger" /> | <a asp-area="Admin" asp-controller="Account" asp-action="filterUsers">مدیریت کاربران</a>
+                        <input type="submit" value="بازگردانی" class="btn btn-success" /> | <a asp-area="Admin" asp-controller="Account" asp-action="filterUsers">مدیریت کاربران</a>
                     </form>
 
                 </div>

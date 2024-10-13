@@ -1,7 +1,7 @@
 ﻿@model List<TestBlog.Core.ViewModels.Admin.Account.FilterUserViewModel>
 
 @{
-    ViewData["Title"] = "مدیریت کاربران";
+    ViewData["Title"] = " مدیریت کاربران حذف شده";
     var counter = 1;
 }
 
@@ -10,11 +10,12 @@
         <div class="col-10 mx-auto">
             <div class="col my-2">
                 <h2 class="page-title">
-                    مدیریت کاربران
+                    مدیریت کاربران حذف شده
                 </h2>
+                <p>نکته: میتوانید کاربران حذف شده را بازگردانی کنید</p>
                 <hr />
 
-                <a asp-area="Admin" asp-controller="Account" asp-action="FilterRestoreUsers" class="btn btn-warning">کاربران حذف شده</a>
+                <a asp-area="Admin" asp-controller="Account" asp-action="FilterUsers" class="btn btn-primary">مدیریت کاربران</a>
 
             </div>
 
@@ -59,10 +60,9 @@
                                     {
                                         <td class="text-muted">کاربر</td>
                                     }
-                                   
+
                                     <td>
-                                        <a asp-area="Admin" asp-controller="Account" asp-action="EditUser" asp-route-id="@item.UserId" class="btn btn-warning">ویرایش</a> |
-                                        <a asp-area="Admin" asp-controller="Account" asp-action="DeleteUser" asp-route-id="@item.UserId" class="btn btn-danger">حذف</a>
+                                        <a asp-area="Admin" asp-controller="Account" asp-action="RestoreUser" asp-route-id="@item.UserId" class="btn btn-success">بازگردانی</a>
                                     </td>
                                 </tr>
                                 counter += 1;

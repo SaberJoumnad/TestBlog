@@ -19,6 +19,9 @@ namespace TestBlog.Core.Services.Users
         Task<EditUserResult> EditUser(EditUserViewModel edit, int id);
         Task<DeleteUserViewModel> GetUserByIdForDelete(int id);
         Task<DeleteUserResult> DeleteUser(int id);
+        Task<List<FilterUserViewModel>> GetAllDeletedUser();
+        Task<RestoreUserViewModel> GetUserByIdForRestore(int id);
+        Task<RestoreUserResult> RestoreUser(int id);
         #endregion
 
     }
