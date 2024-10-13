@@ -37,6 +37,7 @@ namespace TestBlog.Core.Services.Users
                     LastName = register.LastName,
                     UserGender = UserGender.Unknown,
                     Password = _passwordHelper.EncodePasswordMd5(register.Password),
+                    //Password = register.Password,
                     PhoneNumber = register.PhoneNumber,
                     Avatar = "default.png",
                     IsMobileActive = false,
@@ -93,6 +94,7 @@ namespace TestBlog.Core.Services.Users
             if (user.IsBlocked) return LoginUserResult.IsBlocked;
             if (!user.IsMobileActive) return LoginUserResult.NotActive;
             if (user.Password != _passwordHelper.EncodePasswordMd5(login.Password)) return LoginUserResult.NotFound;
+            //if (user.Password != login.Password) return LoginUserResult.NotFound;
 
             return LoginUserResult.Success;
         }
@@ -114,6 +116,50 @@ namespace TestBlog.Core.Services.Users
                     UserId = c.UserId
                 }).ToListAsync();
         }
+
+        public async Task<EditUserViewModel> GetUserByIdForEdit(int id)
+        {
+            var currentUser = await _context.Users.AsQueryable()
+                .FirstOrDefaultAsync(i => i.UserId == id);
+
+            if (currentUser == null) return null;
+
+            return new EditUserViewModel
+            {
+                IsAdmin = currentUser.IsAdmin,
+                IsBlocked = currentUser.IsBlocked,
+                LastName = currentUser.LastName,
+                PhoneNumber = currentUser.PhoneNumber,
+                Password = currentUser.Password,
+                FirstName = currentUser.FirstName,
+                IsMobileActive = currentUser.IsMobileActive,
+                UserId = currentUser.UserId,
+            };
+        }
+
+        public async Task<EditUserResult> EditUser(EditUserViewModel edit, int id)
+        {
+            var user = await _context.Users.AsQueryable().FirstOrDefaultAsync(o => o.UserId == id);
+
+            if (user == null) return EditUserResult.NotFound;
+
+            user.PhoneNumber = edit.PhoneNumber;
+            user.FirstName = edit.FirstName;
+            user.LastName = edit.LastName;
+            user.IsAdmin = edit.IsAdmin;
+            user.IsBlocked = edit.IsBlocked;
+            user.IsMobileActive = edit.IsMobileActive;
+            if(user.Password != edit.Password)
+            {
+                user.Password = _passwordHelper.EncodePasswordMd5(edit.Password);
+            }
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return EditUserResult.Success;
+        }
+
 
         #endregion
 

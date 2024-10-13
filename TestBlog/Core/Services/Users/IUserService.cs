@@ -15,6 +15,8 @@ namespace TestBlog.Core.Services.Users
 
         #region admin
         Task<List<FilterUserViewModel>> GetAllUser();
+        Task<EditUserViewModel> GetUserByIdForEdit(int id);
+        Task<EditUserResult> EditUser(EditUserViewModel edit, int id);
         #endregion
 
     }
