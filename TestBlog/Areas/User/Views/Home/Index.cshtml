@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "پنل کاربری";
+}
+
+<div class="container text-right mt-5 mb-5">
+    <div class="user-account">
+        <div class="row">
+            <div class="col-md-3">
+                <aside>
+                    @await Component.InvokeAsync("UserSideBar")
+
+                </aside>
+            </div>
+            <div class="col-md-9">
+                @await Component.InvokeAsync("UserInformation")
+            </div>
+        </div>
+    </div>
+</div>

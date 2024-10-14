@@ -254,5 +254,48 @@ namespace TestBlog.Core.Services.Users
 
         #endregion
 
+        #region profile
+
+        public async Task<User> GetUserById(long userId)
+        {
+            return await _context.Users.AsQueryable()
+                .SingleOrDefaultAsync(o => o.UserId == userId);
+        }
+
+        public async Task<EditUserProfileViewModel> GetEditUserProfile(long userId)
+        {
+            var user = await _context.Users.AsQueryable()
+                .SingleOrDefaultAsync(o => o.UserId == userId);
+            if (user == null) return null;
+
+            return new EditUserProfileViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                UserGender = user.UserGender,
+            };
+        }
+
+        public async Task<EditUserProfileResult> EditProfile(long userId, EditUserProfileViewModel editUserProfile)
+        {
+            var user = await _context.Users.AsQueryable()
+                .SingleOrDefaultAsync(o => o.UserId == userId);
+            if (user == null) return EditUserProfileResult.NotFound;
+            user.FirstName = editUserProfile.FirstName;
+            user.LastName = editUserProfile.LastName;
+            user.UserGender = editUserProfile.UserGender;
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return EditUserProfileResult.Success;
+
+        }
+
+
+
+
+        #endregion
+
     }
 }

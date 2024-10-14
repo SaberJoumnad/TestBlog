@@ -1,0 +1,29 @@
+﻿@model User
+
+<header>
+    <h3 class="fw-bold"> داشبورد </h3>
+</header>
+<div class="inner">
+    <div class="widget-box">
+        <h3 class="fw-bold"> اطلاعات کاربری </h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="user-information">
+                    <li> نام و نام خانوادگی : @Model.GetUserName() </li>
+                    <li> تاریخ عضویت : @Model.CreateDate.ToPersianDate("ds dd ms Y") </li>
+                    <li> شماره تماس : @Model.PhoneNumber </li>
+                    <li>
+                        @if (Model.IsAdmin == false)
+                        {
+                            <p>نوع کاربر : معمولی</p>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+</div>

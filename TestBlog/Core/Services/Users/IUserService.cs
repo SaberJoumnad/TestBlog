@@ -24,5 +24,11 @@ namespace TestBlog.Core.Services.Users
         Task<RestoreUserResult> RestoreUser(int id);
         #endregion
 
+        #region profile
+        Task<User> GetUserById(long userId);
+        Task<EditUserProfileViewModel> GetEditUserProfile(long userId);
+        Task<EditUserProfileResult> EditProfile(long userId, EditUserProfileViewModel editUserProfile);
+        #endregion
+
     }
 }

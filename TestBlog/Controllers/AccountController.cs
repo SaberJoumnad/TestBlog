@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TestBlog.Core.Services.Users;
 using TestBlog.Core.ViewModels.Site.Account;
+using TestBlog.Core.Extensions;
 
 namespace TestBlog.Controllers
 {
@@ -128,7 +129,7 @@ namespace TestBlog.Controllers
                         };
                         await HttpContext.SignInAsync(principle, properties);
                         TempData[SuccessMessage] = "شما با موفقیت وارد حساب کاربری خود شدید";
-                        return Redirect("/");
+                        return Redirect("/User");
                 }
             }
 

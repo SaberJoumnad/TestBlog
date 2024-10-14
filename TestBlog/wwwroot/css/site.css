@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "iransans";
+    src: url("../fonts/IRANSansWeb_Light.woff2") format("woff2");
+    src: url("../fonts/IRANSansWeb_Light.woff") format("woff");
+}
 html {
   font-size: 14px;
 }
@@ -16,7 +21,30 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+a{
+    text-decoration: none;
+}
 body {
-  margin-bottom: 60px;
+    font-family: 'iransans';
+    margin-bottom: 60px;
+    direction: rtl;
+}
+.user-link li{
+    list-style: none;
+    margin: 10px;
+}
+
+.widget-box {
+    display: block;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ebeefd;
+    -webkit-box-shadow: 0 4px 12px rgb(109 114 139 / 10%);
+    box-shadow: 0 4px 12px rgb(109 114 139 / 20%);
+}
+.user-information li{
+    list-style: none;
+    padding: 10px;
 }
