@@ -119,7 +119,8 @@ namespace TestBlog.Controllers
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, user.PhoneNumber),
-                            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+                            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                            new Claim("IsAdmin",user.IsAdmin.ToString())
                         };
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var principle = new ClaimsPrincipal(identity);
@@ -127,6 +128,13 @@ namespace TestBlog.Controllers
                         {
                             IsPersistent = login.RememberMe
                         };
+
+                        if (user.IsAdmin == true)
+                        {
+                            await HttpContext.SignInAsync(principle, properties);
+                            TempData[SuccessMessage] = "شما با موفقیت وارد پنل ادمین شدید";
+                            return Redirect("/Admin");
+                        }
                         await HttpContext.SignInAsync(principle, properties);
                         TempData[SuccessMessage] = "شما با موفقیت وارد حساب کاربری خود شدید";
                         return Redirect("/User");
@@ -143,7 +151,7 @@ namespace TestBlog.Controllers
         {
             await HttpContext.SignOutAsync();
             TempData[WarningMessage] = "شما با موفقیت از حساب کاربری خود خارج شدید";
-            return Redirect("/");
+            return Redirect("/Login");
         }
         #endregion
 

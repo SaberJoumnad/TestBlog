@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using TestBlog.Core.Extensions;
 using TestBlog.Core.Services.Blogs;
 using TestBlog.Core.Services.Users;
 using TestBlog.Core.Utilities.Password;
 using TestBlog.Core.Utilities.SMS;
 using TestBlog.Models.Context;
+using TestBlog.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
+var user = new User();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -65,6 +70,24 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+// سطح دسترسی کاربران به پنل ادمین
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/Admin"))
+    {
+        if (!context.User.Identity.IsAuthenticated)
+        {
+            context.Response.Redirect("/Login");
+        }
+        else if (!bool.Parse(context.User.FindFirstValue("IsAdmin")))
+        {
+            context.Response.Redirect("/User");
+        }
+    }
+    await next.Invoke();
+});
 
 app.MapControllerRoute(
       name: "areas",

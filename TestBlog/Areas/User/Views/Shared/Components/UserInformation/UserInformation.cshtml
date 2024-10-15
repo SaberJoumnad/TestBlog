@@ -8,7 +8,7 @@
         <h3 class="fw-bold"> اطلاعات کاربری </h3>
         <hr />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <ul class="user-information">
                     <li> نام و نام خانوادگی : @Model.GetUserName() </li>
                     <li> تاریخ عضویت : @Model.CreateDate.ToPersianDate("ds dd ms Y") </li>
@@ -21,8 +21,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-6">
-
+            <div class="col-md-4 px-5">
+                <img src="~/user/@Model.Avatar" class="img-fluid" />
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using TestBlog.Core.Utilities.Password;
 using TestBlog.Core.Utilities.SMS;
 using TestBlog.Core.ViewModels.Admin.Account;
@@ -274,6 +275,7 @@ namespace TestBlog.Core.Services.Users
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 UserGender = user.UserGender,
+                AvatarFile = user.Avatar,
             };
         }
 
@@ -285,6 +287,24 @@ namespace TestBlog.Core.Services.Users
             user.FirstName = editUserProfile.FirstName;
             user.LastName = editUserProfile.LastName;
             user.UserGender = editUserProfile.UserGender;
+
+            string filename = null;
+            if (editUserProfile.Avatar != null)
+            {
+                string UploadDir = Path.Combine("wwwroot\\user");
+                filename = Guid.NewGuid().ToString() + "-" + editUserProfile.Avatar.FileName;
+                string filepath = Path.Combine(UploadDir, filename);
+                using (var filestream = new FileStream(filepath, FileMode.Create))
+                {
+                    editUserProfile.Avatar.CopyTo(filestream);
+                }
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\user", user.Avatar);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                user.Avatar= filename;
+            }
 
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
