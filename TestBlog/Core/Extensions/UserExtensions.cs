@@ -2,6 +2,7 @@
 
 namespace TestBlog.Core.Extensions
 {
+    // در این کلاس نام کاربر را به دست میاریم
     public static class UserExtensions
     {
         public static string GetUserName(this User user)

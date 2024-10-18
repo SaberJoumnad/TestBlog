@@ -13,7 +13,6 @@ using TestBlog.Models.Context;
 using TestBlog.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
-var user = new User();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -73,6 +72,7 @@ app.UseAuthorization();
 
 
 // سطح دسترسی کاربران به پنل ادمین
+#region User access level
 app.Use(async (context, next) =>
 {
     if (context.Request.Path.StartsWithSegments("/Admin"))
@@ -88,6 +88,8 @@ app.Use(async (context, next) =>
     }
     await next.Invoke();
 });
+#endregion
+
 
 app.MapControllerRoute(
       name: "areas",

@@ -2,6 +2,7 @@
 
 namespace TestBlog.Core.Extensions
 {
+    // انواع تبدیل تاریخ ها
     public static class DateConvertor
     {
         public static string ToShamsi(this DateTime value)
@@ -13,7 +14,6 @@ namespace TestBlog.Core.Extensions
 
         public static string ToPersianDate(this DateTime dateTime, string format)
         {
-            //@DateTime.Now.ToPersianDate("ds dd ms Y")
             PersianCalendar pc = new PersianCalendar();
             try
             {
@@ -31,6 +31,10 @@ namespace TestBlog.Core.Extensions
             {
                 return "";
             }
+
+            // نحوه استفاده از این متود در ویو
+            //@DateTime.Now.ToPersianDate("ds dd ms Y")
+
         }
 
         private static string GetDayOfWeekString(int day)

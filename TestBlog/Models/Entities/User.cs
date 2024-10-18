@@ -4,6 +4,8 @@ namespace TestBlog.Models.Entities
 {
     public class User
     {
+        #region properties
+
         [Key]
         public int UserId { get; set; }
         public bool IsDelete { get; set; }
@@ -50,7 +52,11 @@ namespace TestBlog.Models.Entities
 
         [Display(Name = "ادمین")]
         public bool IsAdmin { get; set; }
+
+        #endregion
     }
+
+    #region enum
     public enum UserGender
     {
         [Display(Name = "آقا")]
@@ -60,5 +66,8 @@ namespace TestBlog.Models.Entities
         [Display(Name = "نامشخص")]
         Unknown
     }
+    #endregion
+
+
 }
 

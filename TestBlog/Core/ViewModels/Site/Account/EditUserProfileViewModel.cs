@@ -5,6 +5,7 @@ namespace TestBlog.Core.ViewModels.Site.Account
 {
     public class EditUserProfileViewModel
     {
+        #region properties
         public int BlogId { get; set; }
         public string? AvatarFile { get; set; }
 
@@ -27,13 +28,15 @@ namespace TestBlog.Core.ViewModels.Site.Account
         public IFormFile? Avatar { get; set; }
         [Display(Name = "جنسیت")]
         public UserGender UserGender { get; set; }
-
+        #endregion
     }
 
+    #region enum
     public enum EditUserProfileResult
     {
         Success,
         NotFound
     }
+    #endregion
 
 }

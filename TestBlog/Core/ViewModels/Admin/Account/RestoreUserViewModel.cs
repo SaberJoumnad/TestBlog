@@ -5,6 +5,7 @@ namespace TestBlog.Core.ViewModels.Admin.Account
 {
     public class RestoreUserViewModel
     {
+        #region properties
         [Key]
         public int UserId { get; set; }
         public bool IsDelete { get; set; }
@@ -37,11 +38,14 @@ namespace TestBlog.Core.ViewModels.Admin.Account
 
         [Display(Name = "ادمین")]
         public bool IsAdmin { get; set; }
+        #endregion
     }
 
+    #region enum
     public enum RestoreUserResult
     {
         Success,
         Notfound
     }
+    #endregion
 }

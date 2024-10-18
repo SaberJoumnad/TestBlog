@@ -3,6 +3,7 @@ using System.Security.Principal;
 
 namespace TestBlog.Core.Extensions
 {
+    // در این کلاس ما شناسه کلیدی کاربر را به دست میاریم
     public static class IdentityExtentions
     {
         public static long GetUserId(this ClaimsPrincipal claims)

@@ -4,9 +4,7 @@ namespace TestBlog.Core.ViewModels.Admin.Blog
 {
     public class CreateBlogViewModel
     {
-        // This ViewModel is  for create blog only
-
-
+        #region properties
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
@@ -22,12 +20,15 @@ namespace TestBlog.Core.ViewModels.Admin.Blog
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreateTime { get; set; }
+        #endregion
     }
 
+    #region enum
     public enum CreateBlogResult
     {
         Success,
         TitleExist
     }
+    #endregion
 
 }

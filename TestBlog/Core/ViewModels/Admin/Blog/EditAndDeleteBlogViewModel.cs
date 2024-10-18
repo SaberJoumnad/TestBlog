@@ -4,6 +4,7 @@ namespace TestBlog.Core.ViewModels.Admin.Blog
 {
     public class EditAndDeleteBlogViewModel
     {
+        #region properties
         // this view model is for get blog by Id and edit and delete blog
 
         public int BlogId { get; set; }
@@ -25,11 +26,14 @@ namespace TestBlog.Core.ViewModels.Admin.Blog
 
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreateTime { get; set; }
+        #endregion
     }
 
+    #region enum
     public enum EditAndDeleteBlogResult
     {
         Success,
         NotFound
     }
+    #endregion
 }

@@ -4,6 +4,7 @@ namespace TestBlog.Core.ViewModels.Admin.Account
 {
     public class EditUserViewModel
     {
+        #region properties
         [Key]
         public int UserId { get; set; }
 
@@ -35,11 +36,14 @@ namespace TestBlog.Core.ViewModels.Admin.Account
 
         [Display(Name = "ادمین")]
         public bool IsAdmin { get; set; }
+        #endregion
     }
 
+    #region enum
     public enum EditUserResult
     {
         Success,
         NotFound
     }
+    #endregion
 }
