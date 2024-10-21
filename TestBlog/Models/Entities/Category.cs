@@ -2,41 +2,36 @@
 
 namespace TestBlog.Models.Entities
 {
-    public class Blog
+    public class Category
     {
-
         // بین جدول دسته بندی و جدول وبلاگ، رابطه یک به چند وجود دارد
         // یعنی هر مقاله می تواند فقط برای یک دسته بندی باشد اما دسته بندی می تواند هر چند تا مقاله داشته باشد
 
-
         #region properties
+
         [Key]
-        public int BlogId { get; set; }
+        public int CategoryId { get; set; }
 
-        [Display(Name = "عنوان")]
+        [Display(Name = "نام دسته بندی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MaxLength(200, ErrorMessage = "{0} نمیتواند بیشتر از {1} کارکتر باشد")]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
-        [Display(Name = "متن")]
+        [Display(Name = "عنوان صفحه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public string Text { get; set; }
+        public string PageTitle { get; set; }
 
-        [Display(Name = "تصویر")]
+        [Display(Name = "توضیحات کوتاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public string ImageName { get; set; }
+        public string ShortDescription { get; set; }
 
         [Display(Name = "تاریخ ایجاد")]
-        public DateTime CreateTime { get; set; }
+        public DateTime CreateTime { get; set; } = DateTime.Now;
+
         #endregion
 
         #region relations
 
-        [Display(Name = "نام دسته بندی")]
-        public Category Category { get; set; }
-
-        [Display(Name = "دسته بندی")]
-        public int CategoryId { get; set; }
+        public List<Blog> Blogs { get; set; }
 
         #endregion
 
